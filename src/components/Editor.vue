@@ -14,7 +14,7 @@ export default {
       return Object.assign(
         {
           tabSize: 2,
-          lineNumbers: true,
+          // lineNumbers: true,
           styleActiveLine: true,
           autoCloseTags: true,
           line: true
@@ -31,5 +31,10 @@ export default {
   font-family: "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro",
     monospace;
   text-align: left;
+  height: auto;
+  padding-left: 30px;
+  /* position: absolute;
+  top: 0;
+  bottom: 0; */
 }
 </style>

@@ -1,55 +1,38 @@
 <template>
-  <div id="app">
+  <div id="app" class="container-fluid">
     <header class="row">
-      <div class="col">
+      <div class="col-6">
         <span class="logo">HTML to JADE/PUG</span>
       </div>
-      <div class="col">
+      <div class="col-6">
         <span class="small ml-4">realtime online converter</span>
       </div>
-
     </header>
     <section>
       <div class="row">
         <div class="col-12 col-md-6 editor-html">
-          <HTMLEditor v-model="htmlCode" :options="htmlOptions"></HTMLEditor>
-
+          <HTMLEditor></HTMLEditor>
         </div>
         <div class="col-12 col-md-6 editor-jade">
-          <codemirror v-model="jadeCode"></codemirror>
+          <JADEEditor></JADEEditor>
         </div>
       </div>
-        <!-- <codemirror v-model="code" :options="cmOptions"></codemirror> -->
     </section>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
 </template>
 
 <script>
 import "codemirror/mode/xml/xml.js";
 import HTMLEditor from "./components/HTMLEditor.vue";
+import JADEEditor from "./components/JADEEditor.vue";
 export default {
   name: "app",
   components: {
-    HTMLEditor
+    HTMLEditor,
+    JADEEditor
   },
   data() {
-    return {
-      htmlCode: "aabc",
-      jadeCode: "",
-      htmlOptions: {
-        // codemirror options
-        tabSize: 2,
-        mode: "text/html",
-        theme: "base16-dark",
-        // theme: "ambiance",
-        styleActiveLine: true,
-        autoCloseTags: true,
-        lineNumbers: true,
-        line: true
-        // more codemirror options, 更多 codemirror 的高级配置...
-      }
-    };
+    return {};
   }
 };
 </script>
@@ -83,9 +66,5 @@ header .small {
 
 .img-logo {
   width: 110px;
-}
-
-.CodeMirror {
-  /* background: red; */
 }
 </style>

@@ -47,14 +47,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#html-editor {
-}
-
-.CodeMirror {
-  font-family: "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro",
-    monospace;
-  text-align: left;
-}
-</style>
