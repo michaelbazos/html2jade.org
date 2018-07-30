@@ -1,20 +1,20 @@
 <template>
   <div id="html-editor">
-    <Editor :code="code" :options="options"></Editor>
+    <Editor :code="code" :options="options" @change="change"></Editor>
   </div>
 </template>
 
 <script>
-import Editor from "./Editor";
 import "codemirror/mode/pug/pug.js";
+
+import Editor from "./Editor";
 
 export default {
   name: "JADE-editor",
-  components: {
-    Editor
-  },
-  data() {
-    const code = `doctype html
+  props: {
+    code: {
+      type: String,
+      default: `doctype html
 html(lang='en')
   head
     title Jade
@@ -34,13 +34,23 @@ html(lang='en')
         | strong focus on performance
         | and powerful features.
 
-`;
+`
+    }
+  },
+  components: {
+    Editor
+  },
+  data() {
     return {
-      code,
       options: {
         mode: "text/x-pug"
       }
     };
+  },
+  methods: {
+    change(newCode) {
+      this.$emit("change", newCode);
+    }
   }
 };
 </script>

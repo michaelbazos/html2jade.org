@@ -1,5 +1,5 @@
 <template>
-  <codemirror class="editor" v-model="code" :options="codeMirrorOptions"></codemirror>
+  <codemirror class="editor" :value="mutableCode" :options="codeMirrorOptions" @input="onCmCodeChange"></codemirror>
 </template>
 
 <script>
@@ -8,19 +8,29 @@ import "codemirror/addon/edit/closetag.js";
 
 export default {
   name: "editor",
-  props: ["code", "options"],
+  props: ["code", "options", "mode"],
   computed: {
     codeMirrorOptions() {
       return Object.assign(
         {
           tabSize: 2,
-          // lineNumbers: true,
           styleActiveLine: true,
           autoCloseTags: true,
           line: true
         },
         this.options
       );
+    },
+    mutableCode() {
+      return this.code;
+    }
+  },
+  methods: {
+    onCmCodeChange(newCode) {
+      // console.log("this is new code", newCode);
+
+      this.$emit(`change`, newCode);
+      // this.code = newCode;
     }
   }
 };
@@ -32,9 +42,6 @@ export default {
     monospace;
   text-align: left;
   height: auto;
-  padding-left: 30px;
-  /* position: absolute;
-  top: 0;
-  bottom: 0; */
+  padding-left: 5px;
 }
 </style>

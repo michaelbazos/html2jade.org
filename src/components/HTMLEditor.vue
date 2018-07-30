@@ -1,6 +1,6 @@
 <template>
   <div id="html-editor">
-    <Editor :code="code" :options="options"></Editor>
+    <Editor :code="mutableCode" :options="options" @change="change"></Editor>
   </div>
 </template>
 
@@ -10,11 +10,15 @@ import "codemirror/mode/htmlmixed/htmlmixed.js";
 
 export default {
   name: "HTML-editor",
-  components: {
-    Editor
+  computed: {
+    mutableCode() {
+      return this.code;
+    }
   },
-  data() {
-    const code = `<!DOCTYPE html>
+  props: {
+    code: {
+      type: String,
+      default: `<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Jade</title>
@@ -22,28 +26,41 @@ export default {
       const foo = true;
       let bar = function () {};
       if (foo) {
-        bar(1 + 5)
+         bar(1 + 5)
       }
     <\/script>
   </head>
   <body>
     <h1>Jade - node template engine</h1>
-    <div id="container" class="col">
+    <div class="col" id="container">
       <p>You are amazing</p>
-      <p>Jade is a terse and simple
-         templating language with a
-         strong focus on performance
-         and powerful features.</p>
+      <p>
+        Jade is a terse and simple
+        templating language with a
+        strong focus on performance
+        and powerful features.
+      </p>
     </div>
   </body>
 </html>
-`;
+`
+    }
+  },
+  components: {
+    Editor
+  },
+  data() {
     return {
-      code,
+      // code,
       options: {
         mode: "text/html"
       }
     };
+  },
+  methods: {
+    change(newCode) {
+      this.$emit("change", newCode);
+    }
   }
 };
 </script>

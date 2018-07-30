@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="container-fluid">
+    <!-- <h1>test - {{HTMLCode}}</h1> -->
     <header class="row">
       <div class="col-6">
         <span class="logo">HTML to JADE/PUG</span>
@@ -11,10 +12,10 @@
     <section>
       <div class="row">
         <div class="col-12 col-md-6 editor-html">
-          <HTMLEditor></HTMLEditor>
+          <HTMLEditor :code="mutableHTMLCode"></HTMLEditor>
         </div>
         <div class="col-12 col-md-6 editor-jade">
-          <JADEEditor></JADEEditor>
+          <JADEEditor :code="JADECode" @change="JADEChange"></JADEEditor>
         </div>
       </div>
     </section>
@@ -32,28 +33,45 @@ export default {
     JADEEditor
   },
   data() {
-    return {};
+    return {
+      JADECode: undefined,
+      HTMLCode: undefined
+    };
+  },
+  methods: {
+    JADEChange(newCode) {
+      this.HTMLCode = newCode;
+    }
+  },
+  computed: {
+    mutableHTMLCode() {
+      if (this.HTMLCode) {
+        try {
+          return pug.render(this.HTMLCode, {
+            pretty: true
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
   }
 };
 </script>
 
 <style>
 #app {
-  /* font-family: "Avenir", Helvetica, Arial, sans-serif; */
   font-family: Arvo, Georgia, "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
 }
 
 header {
   font-weight: 700;
   color: white;
   background: #a86454;
-  /* border-bottom: 2px solid #a1a1a1;
-  box-shadow: 0 1px 1px black; */
 }
 
 header .logo {
