@@ -25,13 +25,11 @@
 import "codemirror/mode/xml/xml.js";
 import HTMLEditor from "./components/HTMLEditor.vue";
 import JADEEditor from "./components/JADEEditor.vue";
-import CounterViewer from "./components/CounterViewer.vue";
 export default {
   name: "app",
   components: {
     HTMLEditor,
-    JADEEditor,
-    CounterViewer
+    JADEEditor
   },
   data() {
     return {
