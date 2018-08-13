@@ -1,6 +1,6 @@
 <template>
   <div id="html-editor">
-    <Editor :code="code" :options="options" @change="change"></Editor>
+    <Editor :code="code" :options="options" @change="change" @focus="focus"></Editor>
   </div>
 </template>
 
@@ -56,7 +56,9 @@ export default {
       if (newCode != this.code) {
         this.$emit("change", newCode);
       }
-      // this.$emit("change", newCode);
+    },
+    focus() {
+      this.$emit("focus");
     }
   }
 };

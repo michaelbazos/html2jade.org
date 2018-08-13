@@ -1,24 +1,20 @@
 <template>
   <div id="app" class="container-fluid">
-    <h1 @click="increment">+ Increment</h1>
-    <CounterViewer :counter="counter"></CounterViewer>
-    <header class="row">
-      <div class="col-6">
+    <header class="row p-1">
+      <div class="col-6 text-left">
         <span class="logo">HTML to JADE/PUG</span>
+        <span class="small ml-2">realtime online converter</span>
       </div>
       <div class="col-6">
-        <span class="small ml-4">realtime online converter</span>
       </div>
     </header>
     <section>
       <div class="row">
-        <div class="col-12 col-md-6 editor-html">
-          <!-- <HTMLEditor :code="mutableHTMLCode" @change="HTMLChange"></HTMLEditor> -->
-          <HTMLEditor :code="HTMLCode" @change="HTMLChange"></HTMLEditor>
+        <div class="col-12 col-md-6 editor editor-html">
+          <HTMLEditor :code="HTMLCode" @change="HTMLChange" @focus="onFocus('html')"></HTMLEditor>
         </div>
-        <div class="col-12 col-md-6 editor-jade">
-          <JADEEditor :code="JADECode" @change="JADEChange"></JADEEditor>
-          <!-- <JADEEditor :code="mutableJADECode"></JADEEditor> -->
+        <div class="col-12 col-md-6 editor editor-jade">
+          <JADEEditor :code="JADECode" @change="JADEChange" @focus="onFocus('jade')"></JADEEditor>
         </div>
       </div>
     </section>
@@ -41,6 +37,7 @@ export default {
     return {
       JADECode: undefined,
       HTMLCode: undefined,
+      editingCode: "",
       counter: 1
     };
   },
@@ -48,16 +45,16 @@ export default {
     findHTMLOrBodyTag(html) {
       return html.search(/<\/html>|<\/body>/) > -1;
     },
+    onFocus(type) {
+      this.editingCode = type;
+    },
     JADEChange(newCode) {
-      // console.log(newCode);
       this.JADECode = newCode;
-      // console.log(this.JADECode);
-
-      // if (this.JADECode) {
-      //   this.HTMLCode = pug.render(this.JADECode, {
-      //     pretty: true
-      //   });
-      // }
+      if (this.JADECode) {
+        this.HTMLCode = pug.render(this.JADECode, {
+          pretty: true
+        });
+      }
     },
     HTMLChange(newCode) {
       this.HTMLCode = newCode;
@@ -67,10 +64,8 @@ export default {
         donotencode: true
         // nspaces: getWideOfIndent()
       };
-      console.log(options);
 
       Html2Jade.convertHtml(this.HTMLCode, options, (err, jade) => {
-        console.log(err);
         let sanitizeJade = jade
           .replace(/\|\s+$/gm, "")
           .replace(/^(?:[\t ]*(?:\r?\n|\r))+/gm, "");
@@ -83,39 +78,7 @@ export default {
         // }
         // asyncResultF);
       });
-    },
-    increment() {
-      this.counter = this.counter + 1;
     }
-  },
-  computed: {
-    // mutableHTMLCode() {
-    //   // console.log("test");
-    //   return undefined;
-    //   if (this.JADECode) {
-    //     try {
-    //       return pug.render(this.JADECode, {
-    //         pretty: true
-    //       });
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    //   }
-    // },
-    // mutableJADECode() {
-    //   // this.mutableJADECode = "xxx";
-    //   // return;
-    //   Html2Jade.convertHtml(this.HTMLCode, null, (err, ret) => {
-    //     console.log(err);
-    //     // this.mutableJADECode;
-    //     this.JADECode = ret;
-    //     // if (err) {
-    //     //   throw new Error(err.toString());
-    //     // }
-    //     // asyncResultF);
-    //   });
-    //   return undefined;
-    // }
   }
 };
 </script>
@@ -145,5 +108,16 @@ header .small {
 
 .img-logo {
   width: 110px;
+}
+
+.editor {
+  min-height: 500px;
+  max-height: 90vh;
+  overflow: scroll;
+}
+
+footer {
+  color: white;
+  background: #a86454;
 }
 </style>

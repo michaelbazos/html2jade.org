@@ -1,5 +1,5 @@
 <template>
-  <codemirror class="editor" :value="mutableCode" :options="codeMirrorOptions" @input="onCmCodeChange"></codemirror>
+  <codemirror class="editor" :value="mutableCode" :options="codeMirrorOptions" @focus="onFocus" @input="onCmCodeChange"></codemirror>
 </template>
 
 <script>
@@ -26,11 +26,11 @@ export default {
     }
   },
   methods: {
+    onFocus() {
+      this.$emit("focus");
+    },
     onCmCodeChange(newCode) {
-      // console.log("this is new code", newCode);
-
-      this.$emit(`change`, newCode);
-      // this.code = newCode;
+      this.$emit("change", newCode);
     }
   }
 };
