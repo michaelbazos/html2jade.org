@@ -1,6 +1,6 @@
 <template>
   <div id="html-editor">
-    <Editor :code="mutableCode" :options="options" @change="change"></Editor>
+    <Editor :code="code" :options="options" @change="change"></Editor>
   </div>
 </template>
 
@@ -10,11 +10,6 @@ import "codemirror/mode/htmlmixed/htmlmixed.js";
 
 export default {
   name: "HTML-editor",
-  computed: {
-    mutableCode() {
-      return this.code;
-    }
-  },
   props: {
     code: {
       type: String,
@@ -51,7 +46,6 @@ export default {
   },
   data() {
     return {
-      // code,
       options: {
         mode: "text/html"
       }
@@ -59,7 +53,10 @@ export default {
   },
   methods: {
     change(newCode) {
-      this.$emit("change", newCode);
+      if (newCode != this.code) {
+        this.$emit("change", newCode);
+      }
+      // this.$emit("change", newCode);
     }
   }
 };

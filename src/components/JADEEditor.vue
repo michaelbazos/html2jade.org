@@ -49,7 +49,9 @@ html(lang='en')
   },
   methods: {
     change(newCode) {
-      this.$emit("change", newCode);
+      if (newCode != this.code) {
+        this.$emit("change", newCode);
+      }
     }
   }
 };
