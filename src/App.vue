@@ -109,9 +109,10 @@ header .small {
 }
 
 .editor {
-  min-height: 500px;
-  max-height: 90vh;
+  /* min-height: 500px; */
+  height: 90vh;
   overflow: scroll;
+  font-size: 16px;
 }
 
 footer {
