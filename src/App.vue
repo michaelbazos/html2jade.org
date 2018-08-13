@@ -115,6 +115,10 @@ header .small {
   font-size: 16px;
 }
 
+.CodeMirror {
+  height: auto !important;
+}
+
 footer {
   color: white;
   background: #a86454;
