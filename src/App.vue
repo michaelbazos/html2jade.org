@@ -1,11 +1,16 @@
 <template>
   <div id="app" class="container-fluid">
     <header class="row p-1">
-      <div class="col-6 text-left">
-        <span class="logo">HTML to JADE/PUG</span>
-        <span class="small ml-2">realtime online converter</span>
+      <div class="col-12 col-md-10 text-left">
+        <div class="row align-items-end">
+          <div class="col-12 col-md">
+            <span class="logo">HTML to JADE/PUG</span>
+            <span class="small ml-md-2 d-block d-md-inline">realtime online converter</span>
+          </div>
+          <!-- <div class="small col-md">realtime online converter</div> -->
+        </div>
       </div>
-      <div class="col-6 right">
+      <div class="col-12 col-md-2 right">
         <div class="links"><a href="https://github.com/chenka/html2jade.org/issues/new">Report an issue</a></div>
       </div>
     </header>
@@ -129,7 +134,6 @@ header .small {
 }
 
 .editor {
-  /* min-height: 500px; */
   height: 90vh;
   overflow: scroll;
   font-size: 16px;
@@ -142,5 +146,15 @@ header .small {
 footer {
   color: white;
   background: #a86454;
+}
+
+@media (max-width: 575.98px) {
+  header .logo {
+    font-size: 28px;
+  }
+
+  .editor {
+    border-bottom: 1px solid lightgray;
+  }
 }
 </style>
