@@ -29,6 +29,7 @@
 
 <script>
 import "codemirror/mode/xml/xml.js";
+import "./fonts.css";
 import HTMLEditor from "./components/HTMLEditor.vue";
 import JADEEditor from "./components/JADEEditor.vue";
 export default {
