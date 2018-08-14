@@ -5,7 +5,8 @@
         <span class="logo">HTML to JADE/PUG</span>
         <span class="small ml-2">realtime online converter</span>
       </div>
-      <div class="col-6">
+      <div class="col-6 right">
+        <div class="links"><a href="https://github.com/chenka/html2jade.org/issues/new">Report an issue</a></div>
       </div>
     </header>
     <section>
@@ -94,6 +95,25 @@ header {
   font-weight: 700;
   color: white;
   background: #a86454;
+}
+
+a,
+a:hover {
+  color: white;
+  font-weight: 400;
+  text-decoration: white;
+}
+
+header .right {
+  font-size: 14px;
+  justify-content: flex-end;
+  display: flex;
+}
+
+header .right .links {
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
 }
 
 header .logo {
