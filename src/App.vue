@@ -98,6 +98,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 0;
+}
+
+html, body, #app {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 header {
@@ -138,13 +146,32 @@ header .small {
 }
 
 .editor {
-  height: 90vh;
-  overflow: scroll;
+  height: calc(100vh - 53px);
+  overflow: hidden;
   font-size: 16px;
 }
 
+.editor-html {
+  overflow: hidden;
+  padding-right: 0;
+}
+
+.editor-jade {
+  overflow: hidden;
+  padding-left: 0;
+  
+}
+
+.editor-jade .CodeMirror {
+  background: rgba(0, 0, 0, .03)
+}
+
+.vue-codemirror{
+  overflow: hidden;
+}
+
 .CodeMirror {
-  height: auto !important;
+  height: 100% !important;
 }
 
 footer {
