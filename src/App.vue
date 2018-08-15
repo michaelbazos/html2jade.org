@@ -70,7 +70,9 @@ export default {
         // nspaces: getWideOfIndent()
       };
 
-      Html2Jade.convertHtml(this.HTMLCode, options, (err, jade) => {
+      const html = this.HTMLCode.replace(/template/g, "template_");
+
+      Html2Jade.convertHtml(html, options, (err, jade) => {
         let sanitizeJade = jade
           .replace(/\|\s+$/gm, "")
           .replace(/^(?:[\t ]*(?:\r?\n|\r))+/gm, "");
@@ -78,6 +80,7 @@ export default {
           sanitizeJade = sanitizeJade.replace("head\n", "");
         }
         this.JADECode = sanitizeJade;
+        this.JADECode = this.JADECode.replace(/template_/g, "template");
         // if (err) {
         //   throw new Error(err.toString());
         // }
