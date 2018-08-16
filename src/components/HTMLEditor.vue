@@ -1,6 +1,6 @@
 <template>
   <div id="html-editor">
-    <Editor :code="code" :options="options" @change="change" @focus="focus"></Editor>
+    <Editor :code="code" :options="extendOptions" @change="change" @focus="focus"></Editor>
   </div>
 </template>
 
@@ -12,47 +12,31 @@ export default {
   name: "HTML-editor",
   props: {
     code: {
-      type: String,
-      default: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Jade</title>
-    <script type="text/javascript">
-      const foo = true;
-      let bar = function () {};
-      if (foo) {
-         bar(1 + 5)
-      }
-    <\/script>
-  </head>
-  <body>
-    <h1>Jade - node template engine</h1>
-    <div class="col" id="container">
-      <p>You are amazing</p>
-      <p>
-        Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.
-      </p>
-    </div>
-  </body>
-</html>
-`
+      type: String
+    },
+    options: {
+      // type: Object
     }
   },
   components: {
     Editor
   },
   data() {
+    console.log(this.options);
+
     return {
-      options: {
-        mode: "text/html"
+      extendOptions: {
+        mode: "text/html",
+        // ...this.options
+        indentUnit: this.options
       }
     };
   },
   methods: {
     change(newCode) {
+      this.extendOptions = {
+        modef: "text/js"
+      };
       if (newCode != this.code) {
         this.$emit("change", newCode);
       }

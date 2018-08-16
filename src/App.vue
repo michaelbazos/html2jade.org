@@ -7,7 +7,19 @@
             <span class="logo">HTML to JADE/PUG</span>
             <span class="small ml-md-2 d-block d-md-inline">realtime online converter</span>
           </div>
-          <!-- <div class="small col-md">realtime online converter</div> -->
+          <div class="col-md setting">
+            <label><input type="radio" @change="updateJADE" checked name="indentType" v-model="tabs" :value="false">spaces</label>
+            <label><input type="radio" @change="updateJADE" name="indentType" v-model="tabs" :value="true">tabs</label>
+            <select name="indentWidth" :value="editorOptions.indentUnit" @change="updateJADE">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            width of indent
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-2 right">
@@ -17,7 +29,7 @@
     <section>
       <div class="row">
         <div class="col-12 col-md-6 editor editor-html">
-          <HTMLEditor :code="HTMLCode" @change="HTMLChange" @focus="onFocus('html')"></HTMLEditor>
+          <HTMLEditor :code="HTMLCode" :indent="indentUnit" :options="indentUnit" @change="HTMLChange" @focus="onFocus('html')"></HTMLEditor>
         </div>
         <div class="col-12 col-md-6 editor editor-jade">
           <JADEEditor :code="JADECode" @change="JADEChange" @focus="onFocus('jade')"></JADEEditor>
@@ -32,6 +44,7 @@ import "codemirror/mode/xml/xml.js";
 import "./fonts.css";
 import HTMLEditor from "./components/HTMLEditor.vue";
 import JADEEditor from "./components/JADEEditor.vue";
+import { JADECode, HTMLCode } from "./template.js";
 export default {
   name: "app",
   components: {
@@ -40,12 +53,22 @@ export default {
   },
   data() {
     return {
-      JADECode: undefined,
-      HTMLCode: undefined,
+      JADECode,
+      HTMLCode,
       editingCode: "",
-      counter: 1
+      tabs: false,
+      indentUnit: "2",
+      editorOptions: {
+        // tabSize: 4,
+        indentUnit: "2"
+      }
     };
   },
+  // computed: {
+  //   indentUnit() {
+  //     return 2;
+  //   }
+  // },
   methods: {
     findHTMLOrBodyTag(html) {
       return html.search(/<\/html>|<\/body>/) > -1;
@@ -63,11 +86,17 @@ export default {
     },
     HTMLChange(newCode) {
       this.HTMLCode = newCode;
+      this.updateJADE();
+    },
+    updateJADE() {
+      this.indentUnit = 5;
+      return;
       const isBodyless = !this.findHTMLOrBodyTag(this.HTMLCode);
       const options = {
         bodyless: isBodyless,
-        donotencode: true
-        // nspaces: getWideOfIndent()
+        donotencode: true,
+        tabs: this.tabs,
+        nspaces: this.editingCode.indentUnit
       };
 
       const html = this.HTMLCode.replace(/template/g, "template_");
@@ -101,7 +130,9 @@ export default {
   padding: 0;
 }
 
-html, body, #app {
+html,
+body,
+#app {
   padding: 0;
   margin: 0;
   height: 100%;
@@ -109,7 +140,6 @@ html, body, #app {
 }
 
 header {
-  font-weight: 700;
   color: white;
   background: #a86454;
 }
@@ -134,11 +164,25 @@ header .right .links {
 }
 
 header .logo {
+  font-weight: 700;
   font-size: 30px;
 }
 
 header .small {
   font-size: 20px;
+}
+
+header .setting {
+  font-size: 13px;
+}
+
+header .setting input {
+  margin: 0 7px;
+}
+
+header .setting select[name="indentWidth"] {
+  margin-left: 15px;
+  margin-right: 7px;
 }
 
 .img-logo {
@@ -159,14 +203,13 @@ header .small {
 .editor-jade {
   overflow: hidden;
   padding-left: 0;
-  
 }
 
 .editor-jade .CodeMirror {
-  background: rgba(0, 0, 0, .03)
+  background: rgba(0, 0, 0, 0.03);
 }
 
-.vue-codemirror{
+.vue-codemirror {
   overflow: hidden;
 }
 

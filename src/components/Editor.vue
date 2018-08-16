@@ -1,5 +1,5 @@
 <template>
-  <codemirror class="editor" :value="mutableCode" :options="codeMirrorOptions" @focus="onFocus" @input="onCmCodeChange"></codemirror>
+  <codemirror class="editor" :value="mutableCode" @ptionChange="optionChange" :options="codeMirrorOptions" @focus="onFocus" @input="onCmCodeChange"></codemirror>
 </template>
 
 <script>
@@ -11,9 +11,18 @@ export default {
   props: ["code", "options", "mode"],
   computed: {
     codeMirrorOptions() {
+      console.log("updatecodemirroroption");
+      // setTimeout(() => {
+      //   this.codeMirrorOptions = {
+      //     line: false
+      //   };
+      // }, 2000);
       return Object.assign(
         {
-          tabSize: 2,
+          // tabSize: 20,
+          // indentUnit: 20,
+          // indentWithTabs: false,
+          // softTabs: true,
           styleActiveLine: true,
           autoCloseTags: true,
           line: true
@@ -31,6 +40,9 @@ export default {
     },
     onCmCodeChange(newCode) {
       this.$emit("change", newCode);
+    },
+    optionChange() {
+      console.log("options change");
     }
   }
 };
