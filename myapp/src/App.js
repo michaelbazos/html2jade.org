@@ -25,7 +25,7 @@ class App extends Component {
 
   onHTMLChage = newCode => {
     this.setState({ HTMLCode: newCode })
-    // this.updateJADE()
+    this.updateJADE()
   }
 
   onIndentTypeChange = event => {
@@ -35,18 +35,14 @@ class App extends Component {
 
   onJADEChange = newCode => {
     this.setState({ JADECode: newCode })
-
-    // const HTMLCode = this.pug.render(newCode, { pretty: true })
-    // this.setState({ HTMLCode })
+    try {
+      const HTMLCode = this.pug.render(newCode, { pretty: true })
+      this.setState({ HTMLCode })
+    } catch (error) {}
   }
 
   onTabSizeChange = event => {
-    this.setState({ tabSize: parseInt(event.target.value) })
-  }
-
-  setEditorOption(key, value) {
-    this.editorHTML.getCodeMirror().setOption(key, value)
-    this.editorJADE.getCodeMirror().setOption(key, value)
+    this.setState({ tabSize: parseInt(event.target.value, 10) })
   }
 
   findHTMLOrBodyTag = html => html.search(/<\/html>|<\/body>/) > -1
@@ -58,15 +54,17 @@ class App extends Component {
       bodyless: isBodyless,
       donotencode: true,
     }
-    const editorJADE = this.editorJADE.getCodeMirror()
 
     if (HTMLCode === '') {
-      editorJADE.setValue('')
+      this.setState({ JADECode: '' })
       return
     }
 
     const html = HTMLCode.replace(/template/g, 'template_')
     this.Html2Jade.convertHtml(html, options, (err, jade) => {
+      if (err) {
+        return
+      }
       let sanitizeJade = jade
         .replace(/\|\s+$/gm, '')
         .replace(/^(?:[\t ]*(?:\r?\n|\r))+/gm, '')
@@ -75,9 +73,7 @@ class App extends Component {
       }
 
       sanitizeJade = sanitizeJade.replace(/template_/g, 'template')
-      editorJADE.setValue(sanitizeJade)
-      // console.log(sanitizeJade)
-      // this.setState({ JADECode: sanitizeJade })
+      this.setState({ JADECode: sanitizeJade })
       // if (err) {
       //   throw new Error(err.toString());
       // }
@@ -127,10 +123,13 @@ class App extends Component {
                   />
                   tabs
                 </label>
-                <select name="tabSize" onChange={this.onTabSizeChange}>
+                <select
+                  name="tabSize"
+                  value={tabSize}
+                  onChange={this.onTabSizeChange}
+                >
                   <option value="1">1</option>
                   <option value="2">2</option>
-                  <option value="20">20</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>

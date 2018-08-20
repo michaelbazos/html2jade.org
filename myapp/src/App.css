@@ -52,7 +52,7 @@ header .setting input {
   margin: 0 7px;
 }
 
-header .setting select[name='indentWidth'] {
+header .setting select[name='tabSize'] {
   margin-left: 15px;
   margin-right: 7px;
 }
@@ -63,11 +63,9 @@ header .setting select[name='indentWidth'] {
 
 .editor-html {
   padding-right: 0;
-  /* overflow: hidden; */
 }
 
 .editor-jade {
-  /* overflow: hidden; */
   padding-left: 0;
 }
 
@@ -75,13 +73,6 @@ header .setting select[name='indentWidth'] {
   background: rgba(0, 0, 0, 0.01);
 }
 
-body .ace_scrollbar-v {
-  overflow-y: auto;
-}
-
-body .ace_scrollbar-h {
-  overflow-x: auto;
-}
 .ace_editor {
   height: calc(100vh - 53px) !important;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro',
