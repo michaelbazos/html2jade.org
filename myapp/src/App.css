@@ -9,8 +9,6 @@ body,
 #root {
   padding: 0;
   margin: 0;
-  /* height: 100%; */
-  /* overflow: hidden; */
 }
 
 header {
@@ -63,10 +61,6 @@ header .setting select[name='indentWidth'] {
   width: 110px;
 }
 
-.ReactCodeMirror {
-  height: calc(100vh - 53px);
-}
-
 .editor-html {
   padding-right: 0;
   /* overflow: hidden; */
@@ -77,15 +71,22 @@ header .setting select[name='indentWidth'] {
   padding-left: 0;
 }
 
-.editor-jade .CodeMirror {
-  background: rgba(0, 0, 0, 0.03);
+#ace-jade {
+  background: rgba(0, 0, 0, 0.01);
 }
 
+body .ace_scrollbar-v {
+  overflow-y: auto;
+}
+
+body .ace_scrollbar-h {
+  overflow-x: auto;
+}
 .ace_editor {
-  /* height: 100% !important; */
+  height: calc(100vh - 53px) !important;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro',
     monospace !important;
-  padding: 50px;
+  width: 100% !important;
 }
 
 footer {

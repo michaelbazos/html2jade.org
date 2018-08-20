@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import CodeMirror from 'react-codemirror'
 import { HTMLCode, JADECode } from './template'
 import './App.css'
 import './fonts.css'
@@ -14,8 +13,8 @@ class App extends Component {
   state = {
     HTMLCode,
     JADECode,
-    indentWidth: 2,
-    indentWithTabs: false,
+    tabSize: 2,
+    useSoftTabs: true,
   }
 
   constructor() {
@@ -30,8 +29,8 @@ class App extends Component {
   }
 
   onIndentTypeChange = event => {
-    const indentWithTabs = event.target.value === 'yes' ? true : false
-    this.setState({ indentWithTabs })
+    const useSoftTabs = event.target.value === 'yes' ? true : false
+    this.setState({ useSoftTabs })
   }
 
   onJADEChange = newCode => {
@@ -41,8 +40,8 @@ class App extends Component {
     // this.setState({ HTMLCode })
   }
 
-  onIndentWidthChange = event => {
-    this.setState({ indentWidth: parseInt(event.target.value) })
+  onTabSizeChange = event => {
+    this.setState({ tabSize: parseInt(event.target.value) })
   }
 
   setEditorOption(key, value) {
@@ -86,9 +85,14 @@ class App extends Component {
     })
   }
   render() {
+    const { tabSize, useSoftTabs } = this.state
     const options = {
       showLineNumbers: false,
       showGutter: false,
+      displayIndentGuides: false,
+      printMargin: false,
+      useSoftTabs,
+      tabSize,
     }
 
     return (
@@ -106,9 +110,9 @@ class App extends Component {
                 <label>
                   <input
                     type="radio"
-                    name="indentWithTabs"
-                    value="no"
-                    checked={!this.state.indentWithTabs}
+                    name="useSoftTabs"
+                    value="yes"
+                    checked={this.state.useSoftTabs}
                     onChange={this.onIndentTypeChange}
                   />
                   spaces
@@ -116,14 +120,14 @@ class App extends Component {
                 <label>
                   <input
                     type="radio"
-                    name="indentWithTabs"
-                    value="yes"
-                    checked={this.state.indentWithTabs}
+                    name="useSoftTabs"
+                    value="no"
+                    checked={!this.state.useSoftTabs}
                     onChange={this.onIndentTypeChange}
                   />
                   tabs
                 </label>
-                <select name="indentWidth" onChange={this.onIndentWidthChange}>
+                <select name="tabSize" onChange={this.onTabSizeChange}>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="20">20</option>
@@ -147,15 +151,10 @@ class App extends Component {
         <section>
           <div className="row">
             <div className="col-12 col-md-6 editor editor-html">
-              {/* <CodeMirror
-                ref={element => (this.editorHTML = element)}
-                value={this.state.HTMLCode}
-                onChange={this.onHTMLChage}
-                options={{ mode: 'text/html', ...options }}
-              /> */}
               <AceEditor
                 mode="html"
                 theme="eclipse"
+                name="ace-html"
                 fontSize={16}
                 value={this.state.HTMLCode}
                 onChange={this.onHTMLChage}
@@ -164,15 +163,10 @@ class App extends Component {
               />
             </div>
             <div className="col-12 col-md-6 editor editor-jade">
-              {/* <CodeMirror
-                ref={element => (this.editorJADE = element)}
-                value={this.state.JADECode}
-                onChange={this.onJADEChange}
-                options={{ mode: 'text/x-pug', ...options }}
-              /> */}
               <AceEditor
                 mode="jade"
                 theme="eclipse"
+                name="ace-jade"
                 fontSize={16}
                 value={this.state.JADECode}
                 onChange={this.onJADEChange}
