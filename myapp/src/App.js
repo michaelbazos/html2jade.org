@@ -37,7 +37,8 @@ class App extends Component {
     this.setState({ JADECode: newCode })
     try {
       const HTMLCode = this.pug.render(newCode, { pretty: true })
-      this.setState({ HTMLCode })
+      const sanitizeHTMLCode = HTMLCode.replace(/^\n/, '')
+      this.setState({ HTMLCode: sanitizeHTMLCode })
     } catch (error) {}
   }
 
@@ -74,10 +75,6 @@ class App extends Component {
 
       sanitizeJade = sanitizeJade.replace(/template_/g, 'template')
       this.setState({ JADECode: sanitizeJade })
-      // if (err) {
-      //   throw new Error(err.toString());
-      // }
-      // asyncResultF);
     })
   }
   render() {
