@@ -8,7 +8,7 @@ export const HTMLCode = `<!DOCTYPE html>
       if (foo) {
          bar(1 + 5)
       }
-    <\/script>
+    </script>
   </head>
   <body>
     <h1>Jade - node template engine</h1>
@@ -22,7 +22,7 @@ export const HTMLCode = `<!DOCTYPE html>
       </p>
     </div>
   </body>
-</html>`;
+</html>`
 
 export const JADECode = `doctype html
 html(lang='en')
@@ -42,4 +42,4 @@ html(lang='en')
         | Jade is a terse and simple
         | templating language with a
         | strong focus on performance
-        | and powerful features.`;
+        | and powerful features.`

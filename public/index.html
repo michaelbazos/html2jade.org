@@ -1,31 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="HTML2jade help you convert a HTML snippet to a Jade/Pug snippet. Useful for testing out how something would look in Jade vs HTML">
   <meta property="og:title" content="HTML to Jade/Pug Converter">
   <meta property="og:site_name" content="HTML2Jade">
   <script src="https://pugjs.org/js/pug.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/he/1.1.1/he.min.js"></script>
-  <script src="<%= BASE_URL %>html-to-jade.js"></script>
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
-  <title>HTML2Jade - HTML to Jade/Pug Online Realtime Converter</title>
+  <script src="%PUBLIC_URL%/html-to-jade.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+  <title>React App</title>
 </head>
 
 <body>
   <script>
-    const pug = require('pug');
+    window.pug = require('pug');
   </script>
   <noscript>
-    <strong>We're sorry but html2jade.org doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    You need to enable JavaScript to run this app.
   </noscript>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
+  <div id="root" class="container-fluid"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
 </body>
 
 </html>
