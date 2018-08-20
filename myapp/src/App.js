@@ -3,11 +3,12 @@ import CodeMirror from 'react-codemirror'
 import { HTMLCode, JADECode } from './template'
 import './App.css'
 import './fonts.css'
-import 'codemirror/mode/xml/xml'
-import 'codemirror/mode/pug/pug.js'
-import 'codemirror/addon/selection/active-line.js'
-import 'codemirror/addon/edit/closetag.js'
-import 'codemirror/lib/codemirror.css'
+import AceEditor from 'react-ace'
+
+import 'brace/mode/html'
+import 'brace/mode/xml'
+import 'brace/mode/jade'
+import 'brace/theme/eclipse'
 
 class App extends Component {
   state = {
@@ -25,7 +26,7 @@ class App extends Component {
 
   onHTMLChage = newCode => {
     this.setState({ HTMLCode: newCode })
-    this.updateJADE()
+    // this.updateJADE()
   }
 
   onIndentTypeChange = event => {
@@ -34,12 +35,10 @@ class App extends Component {
   }
 
   onJADEChange = newCode => {
-    const editorHTML = this.editorHTML.getCodeMirror()
     this.setState({ JADECode: newCode })
 
-    const HTMLCode = this.pug.render(newCode, { pretty: true })
-    editorHTML.setValue(HTMLCode)
-    this.setState({ HTMLCode })
+    // const HTMLCode = this.pug.render(newCode, { pretty: true })
+    // this.setState({ HTMLCode })
   }
 
   onIndentWidthChange = event => {
@@ -86,16 +85,10 @@ class App extends Component {
       // asyncResultF);
     })
   }
-
   render() {
     const options = {
-      styleActiveLine: true,
-      autoCloseTags: true,
-      line: true,
-      // indentWithTabs: this.state.indentWithTabs,
-      indentWithTabs: false,
-      // tabSize: this.state.indentWidth,
-      indentUnit: this.state.indentWidth,
+      showLineNumbers: false,
+      showGutter: false,
     }
 
     return (
@@ -154,19 +147,37 @@ class App extends Component {
         <section>
           <div className="row">
             <div className="col-12 col-md-6 editor editor-html">
-              <CodeMirror
+              {/* <CodeMirror
                 ref={element => (this.editorHTML = element)}
                 value={this.state.HTMLCode}
                 onChange={this.onHTMLChage}
                 options={{ mode: 'text/html', ...options }}
+              /> */}
+              <AceEditor
+                mode="html"
+                theme="eclipse"
+                fontSize={16}
+                value={this.state.HTMLCode}
+                onChange={this.onHTMLChage}
+                setOptions={options}
+                editorProps={{ $blockScrolling: true }}
               />
             </div>
             <div className="col-12 col-md-6 editor editor-jade">
-              <CodeMirror
+              {/* <CodeMirror
                 ref={element => (this.editorJADE = element)}
                 value={this.state.JADECode}
                 onChange={this.onJADEChange}
                 options={{ mode: 'text/x-pug', ...options }}
+              /> */}
+              <AceEditor
+                mode="jade"
+                theme="eclipse"
+                fontSize={16}
+                value={this.state.JADECode}
+                onChange={this.onJADEChange}
+                setOptions={options}
+                editorProps={{ $blockScrolling: true }}
               />
             </div>
           </div>

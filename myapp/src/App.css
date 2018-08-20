@@ -65,16 +65,15 @@ header .setting select[name='indentWidth'] {
 
 .ReactCodeMirror {
   height: calc(100vh - 53px);
-  font-size: 16px;
 }
 
 .editor-html {
   padding-right: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .editor-jade {
-  overflow: hidden;
+  /* overflow: hidden; */
   padding-left: 0;
 }
 
@@ -82,10 +81,11 @@ header .setting select[name='indentWidth'] {
   background: rgba(0, 0, 0, 0.03);
 }
 
-.CodeMirror {
-  height: 100% !important;
+.ace_editor {
+  /* height: 100% !important; */
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro',
     monospace !important;
+  padding: 50px;
 }
 
 footer {
