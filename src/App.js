@@ -1,92 +1,92 @@
-import React, { Component } from 'react'
-import { HTMLCode, JADECode } from './template'
-import './App.css'
-import './fonts.css'
-import AceEditor from 'react-ace'
+import React, { Component } from "react";
+import { HTMLCode, JADECode } from "./template";
+import "./App.css";
+import "./fonts.css";
+import AceEditor from "react-ace";
 
-import 'brace/mode/html'
-import 'brace/mode/xml'
-import 'brace/mode/jade'
-import 'brace/theme/eclipse'
+import "brace/mode/html";
+import "brace/mode/xml";
+import "brace/mode/jade";
+import "brace/theme/eclipse";
 
 class App extends Component {
   state = {
     HTMLCode,
     JADECode,
     tabSize: 2,
-    useSoftTabs: true,
-  }
+    useSoftTabs: true
+  };
 
   constructor() {
-    super()
-    this.Html2Jade = window.Html2Jade
-    this.pug = window.pug
+    super();
+    this.Html2Jade = window.Html2Jade;
+    this.pug = window.pug;
   }
 
   onHTMLChage = newCode => {
-    this.setState({ HTMLCode: newCode })
-    this.updateJADE()
-  }
+    this.setState({ HTMLCode: newCode });
+    this.updateJADE();
+  };
 
   onIndentTypeChange = event => {
-    const useSoftTabs = event.target.value === 'yes' ? true : false
-    this.setState({ useSoftTabs })
-  }
+    const useSoftTabs = event.target.value === "yes" ? true : false;
+    this.setState({ useSoftTabs });
+  };
 
   onJADEChange = newCode => {
-    this.setState({ JADECode: newCode })
+    this.setState({ JADECode: newCode });
     try {
-      const HTMLCode = this.pug.render(newCode, { pretty: true })
-      const sanitizeHTMLCode = HTMLCode.replace(/^\n/, '')
-      this.setState({ HTMLCode: sanitizeHTMLCode })
+      const HTMLCode = this.pug.render(newCode, { pretty: true });
+      const sanitizeHTMLCode = HTMLCode.replace(/^\n/, "");
+      this.setState({ HTMLCode: sanitizeHTMLCode });
     } catch (error) {}
-  }
+  };
 
   onTabSizeChange = event => {
-    this.setState({ tabSize: parseInt(event.target.value, 10) })
-  }
+    this.setState({ tabSize: parseInt(event.target.value, 10) });
+  };
 
-  findHTMLOrBodyTag = html => html.search(/<\/html>|<\/body>/) > -1
+  findHTMLOrBodyTag = html => html.search(/<\/html>|<\/body>/) > -1;
 
   updateJADE = () => {
-    const { HTMLCode } = this.state
-    const isBodyless = !this.findHTMLOrBodyTag(HTMLCode)
+    const { HTMLCode } = this.state;
+    const isBodyless = !this.findHTMLOrBodyTag(HTMLCode);
     const options = {
       bodyless: isBodyless,
-      donotencode: true,
+      donotencode: true
+    };
+
+    if (HTMLCode === "") {
+      this.setState({ JADECode: "" });
+      return;
     }
 
-    if (HTMLCode === '') {
-      this.setState({ JADECode: '' })
-      return
-    }
-
-    const html = HTMLCode.replace(/template/g, 'template_')
+    const html = HTMLCode.replace(/template/g, "template_");
     this.Html2Jade.convertHtml(html, options, (err, jade) => {
       if (err) {
-        return
+        return;
       }
       let sanitizeJade = jade
-        .replace(/\|\s+$/gm, '')
-        .replace(/^(?:[\t ]*(?:\r?\n|\r))+/gm, '')
+        .replace(/\|\s+$/gm, "")
+        .replace(/^(?:[\t ]*(?:\r?\n|\r))+/gm, "");
       if (isBodyless) {
-        sanitizeJade = sanitizeJade.replace('head\n', '')
+        sanitizeJade = sanitizeJade.replace("head\n", "");
       }
 
-      sanitizeJade = sanitizeJade.replace(/template_/g, 'template')
-      this.setState({ JADECode: sanitizeJade })
-    })
-  }
+      sanitizeJade = sanitizeJade.replace(/template_/g, "template");
+      this.setState({ JADECode: sanitizeJade });
+    });
+  };
   render() {
-    const { tabSize, useSoftTabs } = this.state
+    const { tabSize, useSoftTabs } = this.state;
     const options = {
       showLineNumbers: false,
       showGutter: false,
       displayIndentGuides: false,
       printMargin: false,
       useSoftTabs,
-      tabSize,
-    }
+      tabSize
+    };
 
     return (
       <React.Fragment>
@@ -172,9 +172,15 @@ class App extends Component {
             </div>
           </div>
         </section>
+        {/* <article className="information pt-3 pb-3 mt-4 row">
+          <div className="col-12">
+            <b>HTML2jade</b> help you convert a HTML snippet to a Jade snippet.
+            Useful for testing out how something would look in Jade vs HTML
+          </div>
+        </article> */}
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default App
+export default App;

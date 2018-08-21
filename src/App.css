@@ -1,17 +1,11 @@
 body {
-  font-family: Arvo, Georgia, 'Times New Roman', Times, serif;
+  font-family: Arvo, Georgia, "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-html,
-body,
-#root {
-  padding: 0;
-  margin: 0;
-}
-
-header {
+header,
+article {
   color: white;
   background: #a86454;
 }
@@ -52,7 +46,7 @@ header .setting input {
   margin: 0 7px;
 }
 
-header .setting select[name='tabSize'] {
+header .setting select[name="tabSize"] {
   margin-left: 15px;
   margin-right: 7px;
 }
@@ -75,7 +69,7 @@ header .setting select[name='tabSize'] {
 
 .ace_editor {
   height: calc(100vh - 53px) !important;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro',
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro",
     monospace !important;
   width: 100% !important;
 }
