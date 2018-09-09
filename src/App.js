@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import { HTMLCode, JADECode } from "./template";
-import "./App.css";
-import "./fonts.css";
+import beautify from "js-beautify";
+import pugBeautify from "pug-beautify";
 import AceEditor from "react-ace";
-
 import "brace/mode/html";
 import "brace/mode/xml";
 import "brace/mode/jade";
 import "brace/theme/eclipse";
+import { HTMLCode, JADECode } from "./template";
+import "./App.css";
+import "./fonts.css";
+
+
 
 class App extends Component {
   state = {
@@ -31,19 +34,37 @@ class App extends Component {
   onIndentTypeChange = event => {
     const useSoftTabs = event.target.value === "yes" ? true : false;
     this.setState({ useSoftTabs });
+    setTimeout(() => {
+      this.updateHTML();
+      this.updateJADE();
+    }, 100);
   };
 
   onJADEChange = newCode => {
     this.setState({ JADECode: newCode });
+    this.updateHTML();
+  };
+
+  updateHTML = () => {
     try {
-      const HTMLCode = this.pug.render(newCode, { pretty: true });
-      const sanitizeHTMLCode = HTMLCode.replace(/^\n/, "");
+      const HTMLCode = this.pug.render(this.state.JADECode, { pretty: true });
+
+      let sanitizeHTMLCode = HTMLCode.replace(/^\n/, "");
+      sanitizeHTMLCode = beautify.html(sanitizeHTMLCode, {
+        indent_size: this.state.tabSize,
+        indent_with_tabs: !this.state.useSoftTabs
+      });
       this.setState({ HTMLCode: sanitizeHTMLCode });
     } catch (error) {}
-  };
+  }
 
   onTabSizeChange = event => {
     this.setState({ tabSize: parseInt(event.target.value, 10) });
+    setTimeout(() => {
+      this.updateJADE();
+      this.updateHTML();
+      
+    }, 100);
   };
 
   findHTMLOrBodyTag = html => html.search(/<\/html>|<\/body>/) > -1;
@@ -72,8 +93,11 @@ class App extends Component {
       if (isBodyless) {
         sanitizeJade = sanitizeJade.replace("head\n", "");
       }
-
       sanitizeJade = sanitizeJade.replace(/template_/g, "template");
+      sanitizeJade = pugBeautify(sanitizeJade, {
+        fill_tab: !this.state.useSoftTabs,
+        tab_size: this.state.tabSize
+      });
       this.setState({ JADECode: sanitizeJade });
     });
   };
