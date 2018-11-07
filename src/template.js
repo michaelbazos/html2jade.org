@@ -44,6 +44,6 @@ html(lang='en')
       p
         | Jade is a terse and simple
         | templating language with a
-        | strong focus on performancej
+        | strong focus on performance
         | and powerful features.
 `
